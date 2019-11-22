@@ -17,21 +17,15 @@ if (usd.result){
 }else{
     out.print("LOGIN INVALIDO");
 }
+
 %>
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>MOSTRA USUARIOS</title>
+        <title>MOSTRA VEICULOS</title>
     </head>
     <body>
-        <%--<form action="index.jsp" method="post">
-            
-            <label>NOME</label><br>
-            <input type="text" name="nome"/><br><br>
-            <button type="submit">PESQUISAR</button><br><br>
-        </form>--%>
-        <%
             String nome_cliente = request.getParameter("nome");
             try{
                 out.print("<table border='1'>");
