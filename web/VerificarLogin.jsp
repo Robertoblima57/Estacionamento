@@ -1,6 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Model.Usuario"%>
 <%@page import="Dao.UsuarioDao"%>
+<%@page import="Model.Veiculo"%>
+<%@page import="Dao.VeiculoDao"%>
+<%@page import="java.util.ArrayList"%>
+
 
 <%
 Usuario usu = new Usuario();
@@ -25,34 +29,62 @@ if (usd.result){
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>MOSTRA VEICULOS</title>
     </head>
-    <body>
-            String nome_cliente = request.getParameter("nome");
+    <body><br><br>
+        <label>DATA: </label>
+        <input type="text" >
+        <label for ="Status">STATUS</label>
+        <select NAME="STATUS">
+                <option>SELECIONE UMA OPÇÃO</option>
+                <option value="A">ABERTO</option>
+                <option value="F">FECHADO</option>
+        </select>
+        <label>VALOR TOTAL:</label>
+        <input type="text" >
+        <br><br>
+        
+        <%
+        String dataEntrada = request.getParameter("dataentrada");
             try{
                 out.print("<table border='1'>");
                 out.print("<tr>");
                 out.print("<th>CODIGO</th>");
-                out.print("<th>NOME USUARIO</th>");
-                out.print("<th>LOGIN USUARIO</th>");
-                out.print("<th>SENHA LOGIN</th>");
+                out.print("<th>PLACA</th>");
+                out.print("<th>MARCA</th>");
+                out.print("<th>MODELO</th>");
+                out.print("<th>DATA/ENTRADA</th>");
+                out.print("<th>DATA/SAIDA</th>");
+                out.print("<th>TEMPO/TOTAL</th>");
+                out.print("<th>STATUS</th>");
+                out.print("<th>VALOR</th>");
                 out.print("<th>editar</th>");
                 out.print("<th>excluir</th>");
                 out.print("</tr>");
                 
-                UsuarioDao Usu = new UsuarioDao();
+                VeiculoDao veicd = new VeiculoDao();
                   
-                    ArrayList<Usuario> lista = Usu.ListarTodos();
+                    ArrayList<Veiculo> lista = veicd.ListarTodosVeiculos();
                     for(int i = 0;i < lista.size();i++){
                         out.print("<tr>");
-                        out.print("<td>"+lista.get(i).getId_usuario()+"</td>");
-                        out.print("<td>"+lista.get(i).getNome_usuario()+"</td>");
-                        out.print("<td>"+lista.get(i).getLogin_usuario()+"</td>");
-                        out.print("<td>"+lista.get(i).getSenha_login()+"</td>");
-                        out.print("<td><a href='AlterarLogin.jsp?CODIGO_USUARIO="+lista.get(i).getId_usuario()+
-                                "&nome="+lista.get(i).getNome_usuario()+
-                                "&login="+lista.get(i).getLogin_usuario()+
-                                "&senha="+lista.get(i).getSenha_login()+"'>CLIQUE</a></td>");
-                        out.print("<td><a href='ExcluirLogin.jsp?CODIGO_USUARIO="+lista.get(i).getId_usuario()+
-                                "&nome="+lista.get(i).getNome_usuario()+"'>CLIQUE</a></td>");
+                        out.print("<td>"+lista.get(i).getIdEstacionamento()+"</td>");
+                        out.print("<td>"+lista.get(i).getPlaca()+"</td>");
+                        out.print("<td>"+lista.get(i).getMarca()+"</td>");
+                        out.print("<td>"+lista.get(i).getModelo()+"</td>");
+                        out.print("<td>"+lista.get(i).getDataEntrada()+"</td>");
+                        out.print("<td>"+lista.get(i).getDataSaida()+"</td>");
+                        out.print("<td>"+lista.get(i).getTempoTotal()+"</td>");
+                        out.print("<td>"+lista.get(i).getStatus()+"</td>");
+                        out.print("<td>"+lista.get(i).getValor()+"</td>");
+                        out.print("<td><a href='AlterarVeiculo.jsp?IdEstacionamento="+lista.get(i).getIdEstacionamento()+
+                                "&placa="+lista.get(i).getPlaca()+
+                                "&marca="+lista.get(i).getMarca()+
+                                "&modelo="+lista.get(i).getModelo()+
+                                "&dataentrada="+lista.get(i).getDataEntrada()+
+                                "&datasaida="+lista.get(i).getDataSaida()+
+                                "&tempototal="+lista.get(i).getTempoTotal()+
+                                "&status="+lista.get(i).getStatus()+
+                                "&valor="+lista.get(i).getValor()+"'>CLIQUE</a></td>");
+                        out.print("<td><a href='ExcluirVeiculo.jsp?IdEstacionamento="+lista.get(i).getIdEstacionamento()+
+                                "&placa="+lista.get(i).getPlaca()+"'>CLIQUE</a></td>");
                         out.print("</tr>");
                     }
                 
@@ -62,7 +94,7 @@ if (usd.result){
             out.print("</table>");
         %>
         <br>
-        <a href="InserirLogin.jsp">NOVO CADASTRO</a><br><br>
-        <a href="index.jsp">TELA LOGIN</a>
+        <a href="InserirVeiculo.jsp">NOVO CADASTRO VEICULO</a><br><br>
+        
     </body>
 </html>
