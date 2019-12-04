@@ -19,6 +19,16 @@ public class Veiculo {
     private String tempoTotal;
     private String Status;
     private double valor;
+    private double valortotal;
+
+    public double getValortotal() {
+        return valortotal;
+    }
+
+    public void setValortotal(double valortotal) {
+        this.valortotal = valortotal;
+    }
+    
 
     public int getIdEstacionamento() {
         return idEstacionamento;

@@ -31,23 +31,35 @@ public class VeiculoDao {
     public boolean result = false;
     public String nome = "";
     
-    public boolean verificarVeiculo(Veiculo veiculo){
-        String sql = "SELECT nome_usuario FROM tabestacionamento "
-                + "WHERE datahoraentrada = ? AND statusveiculo = ?";
+    public ArrayList<Veiculo> verificarVeiculo(String valor){
+        String sql = "SELECT * FROM tabestacionamento WHERE statusveiculo";
         try{
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, veiculo.getDataEntrada());
-            stmt.setString(2, veiculo.getStatus());
-            rs = stmt.executeQuery();
-            if (rs.next()){
-                result = true;
-                nome = rs.getString("DataEntrada");
+            //stmt.setString(1, veiculo.getDataEntrada());
+            //stmt.setString(2, veiculo.getStatus());
+            rs = st.executeQuery(sql);
+            while(rs.next()){
+            
+             Veiculo veiculo = new Veiculo();
+            
+                veiculo.setIdEstacionamento(rs.getInt("idEstacionamento"));
+                veiculo.setPlaca(rs.getString("placa"));
+                veiculo.setMarca(rs.getString("marca"));
+                veiculo.setModelo(rs.getString("modelo"));
+                veiculo.setDataEntrada(rs.getString("datahoraentrada"));
+                veiculo.setDataSaida(rs.getString("datahorasaida"));
+                veiculo.setTempoTotal(rs.getString("tempototal"));
+                veiculo.setStatus(rs.getString("statusveiculo"));
+                veiculo.setValor(rs.getDouble("valor"));
+                lista.add(veiculo);
+            
+            
+            //stmt.close();
             }
-            stmt.close();
         }catch(Exception erro){
             throw new RuntimeException("Erro 2 - Verificar" + erro);
          }
-        return result;
+        return lista;
         
         
     }
@@ -55,6 +67,7 @@ public class VeiculoDao {
 //metodos de pesquisa pesquisa tudo
     public ArrayList<Veiculo> ListarTodosVeiculos(){
         String sql = "SELECT * FROM tabestacionamento";
+           
         try{
             st = conn.createStatement();
             rs = st.executeQuery(sql);
@@ -69,6 +82,7 @@ public class VeiculoDao {
                 veiculo.setTempoTotal(rs.getString("tempototal"));
                 veiculo.setStatus(rs.getString("statusveiculo"));
                 veiculo.setValor(rs.getDouble("valor"));
+                //veiculo.setValortotal(rs.getDouble("valortotal"));
                 lista.add(veiculo);
             }
         }catch(Exception erro){
